@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/single-film', function () {
+    return view('single-film');
 });
 
-Route::get('/film', function() {
+Route::get('/film/', function() {
     $val = 20;
     $list = [];
     for($i=0; $i < $val; $i++) {
@@ -30,4 +30,24 @@ Route::get('/film', function() {
     }
 
     return view('mes-films', ['list' => $list]);
+});
+
+
+
+Route::get('/film/{genre}', function($genre) {
+    $val = 20;
+    $list = [];
+    for($i=0; $i < $val; $i++) {
+        $response = Http::get('https://api.themoviedb.org/3/movie/' . $i . '?api_key=16eb18763928632ac96b6291fa839732&language=en-US');
+        if($response->ok()){
+            $film = $response->json();
+            if(collect($film['genres'])->where('name', $genre)->count() > 0) {
+                $list[] = $film;
+            }
+        }else{
+            $val++;
+        }
+    }
+
+    return view('mes-films-genre', ['list' => $list]);
 });

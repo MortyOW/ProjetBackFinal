@@ -32,16 +32,6 @@
     </select>
     <button type="submit" id="btn">Submit</button>
 </form>
-@dd($list)
-@foreach($list as $element)
-    @foreach($element['genres'] as $genre)
-        @if($genre['name'] == $_POST['value'])
-    @endforeach
-    @if($element->genres['name'] == $_POST['value'])
-        <h1>{{$element['title']}}</h1>
-        <p>{{$element['id']}}</p>
-        <a href="single-film">Détails</a>
-    @endif
-@endforeach
+
 </body>
 </html>
